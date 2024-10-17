@@ -1,12 +1,14 @@
-FROM maven:3.6.3-jdk-8 AS build
-
+# Stage 1: Build the application
+FROM maven:3.8.1-jdk-11 AS build
 WORKDIR /app
-COPY . .
+COPY pom.xml .
+COPY src ./src
 RUN mvn clean package
-FROM openjdk:8-jre
 
+# Stage 2: Create the final image
+FROM openjdk:11-jre
 WORKDIR /app
-COPY --from=build /app/target/hello-world-1.0-SNAPSHOT.jar /app/hello-world.jar
+COPY --from=build /app/target/hello-world-maven-0.0.1-SNAPSHOT-jar-with-dependencies.jar /app/hello-world.jar
 
 # Run the application
-ENTRYPOINT ["java", "-jar", "/app/hello-world.jar"]
+CMD ["java", "-jar", "hello-world.jar"]
