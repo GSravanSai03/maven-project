@@ -45,7 +45,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>hello-world.App</mainClass>
+                            <mainClass>helloprint.App</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
